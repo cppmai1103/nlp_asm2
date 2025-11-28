@@ -19,16 +19,16 @@ cd nlp_asm2
 ```
 
 ### (Optional) Create a virtual environment
-\`\`\`bash
+```bash
 python -m venv .venv
 source .venv/bin/activate       # Linux/Mac
 # .venv\Scripts\activate        # Windows
-\`\`\`
+```
 
 ### Install dependencies
-\`\`\`bash
+```bash
 pip install -r requirements.txt
-\`\`\`
+```
 
 ---
 
