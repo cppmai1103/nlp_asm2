@@ -1,0 +1,5 @@
+summary_result
+result_*
+*.parquet
+*result_summary
+.ipynb_checkpoints/
