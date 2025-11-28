@@ -16,3 +16,6 @@ It includes:
 ```bash
 git clone https://github.com/cppmai1103/nlp_asm2.git
 cd nlp_asm2
+
+
+pip install -r requirements.txt
