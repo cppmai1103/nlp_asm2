@@ -1,6 +1,6 @@
-# NLP701 – SemEval 2026 Task 13 (CodeBERT)
+<img width="278" height="77" alt="image" src="https://github.com/user-attachments/assets/38d2b75d-efe9-4ea1-aa57-df9399f25c98" /># NLP701 – SemEval 2026 Task 13
 
-This repository contains code for training and evaluating a CodeBERT-based classifier for SemEval 2026 Task 13 (Subtask A).  
+This repository contains code for training and evaluating a CodeBERT-based classifier for SemEval 2026 Task 13 (Subtask B).  
 It includes:
 
 - `train.py` — main training pipeline  
@@ -36,9 +36,9 @@ pip install -r requirements.txt
 
 Training and inference scripts expect a \`.parquet\` file with at least:
 
-- \`code\` — source code snippet  
-- \`label\` — class label (integer)  
-- Optional for inference: \`ID\`
+- `code` — source code snippet  
+- `label` — class label (integer)  
+- Optional for inference: `ID`
 
 Example:
 
@@ -54,12 +54,12 @@ If no parquet is provided, \`train.py\` loads the SemEval dataset automatically.
 ## 🏋️‍♀️ 3. Training
 
 ### Basic usage
-\`\`\`bash
+```bash
 python train.py
-\`\`\`
+```
 
 ### Advanced usage
-\`\`\`bash
+```bash
 python train.py \
   --task A \
   --output_dir ./results_undersampling \
@@ -67,7 +67,7 @@ python train.py \
   --batch_size 32 \
   --learning_rate 2e-5 \
   --max_length 128
-\`\`\`
+```
 
 Arguments:
 
@@ -84,54 +84,54 @@ Arguments:
 
 ## ⚖️ 4. Weighted Cross Entropy Training
 
-\`\`\`bash
+```bash
 python train_weightCE.py \
   --output_dir ./results_weighted \
   --epochs 3 \
   --batch_size 32 \
   --learning_rate 2e-5
-\`\`\`
+```
 
 ---
 
 ## 🔎 5. Inference
 
-\`\`\`bash
+```bash
 python predict.py \
   --model_path ./results_undersampling \
   --parquet_path test.parquet \
   --output_path predictions.csv
-\`\`\`
+```
 
 Output CSV format:
 
-\`\`\`
+```
 ID,prediction
 101,0
 102,1
-\`\`\`
+```
 
 ---
 
 ## ☁️ 6. Upload to Hugging Face
 
 1. Log in:
-\`\`\`bash
+```bash
 huggingface-cli login
-\`\`\`
+```
 
 2. Upload:
-\`\`\`bash
+```bash
 python huggingface.py \
   --model_dir ./results_undersampling \
   --repo_id your-username/your-model-name
-\`\`\`
+```
 
 ---
 
 ## 📁 7. Repository Structure
 
-\`\`\`
+```
 nlp_asm2/
 ├── train.py
 ├── train_weightCE.py
@@ -140,7 +140,7 @@ nlp_asm2/
 ├── requirements.txt
 ├── .gitignore
 └── README.md
-\`\`\`
+```
 
 ---
 
