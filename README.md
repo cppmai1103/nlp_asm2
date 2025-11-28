@@ -17,5 +17,5 @@ It includes:
 git clone https://github.com/cppmai1103/nlp_asm2.git
 cd nlp_asm2
 
-
+### Install dependencies
 pip install -r requirements.txt
