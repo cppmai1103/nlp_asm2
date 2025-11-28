@@ -13,10 +13,10 @@ It includes:
 ## 🔧 1. Installation
 
 ### Clone the repository
-\`\`\`bash
+```bash
 git clone https://github.com/cppmai1103/nlp_asm2.git
 cd nlp_asm2
-\`\`\`
+```
 
 ### (Optional) Create a virtual environment
 \`\`\`bash
