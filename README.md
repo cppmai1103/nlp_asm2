@@ -1,11 +1,11 @@
-<img width="278" height="77" alt="image" src="https://github.com/user-attachments/assets/38d2b75d-efe9-4ea1-aa57-df9399f25c98" /># NLP701 – SemEval 2026 Task 13
+# NLP701 – SemEval 2026 Task 13
 
 This repository contains code for training and evaluating a CodeBERT-based classifier for SemEval 2026 Task 13 (Subtask B).  
 It includes:
 
 - `train.py` — main training pipeline  
 - `train_weightCE.py` — training with weighted cross-entropy  
-- `predict.py` — inference on \`.parquet\` files  
+- `predict.py` — inference on `.parquet` files  
 - `huggingface.py` — upload trained model to Hugging Face Hub  
 
 ---
@@ -16,13 +16,6 @@ It includes:
 ```bash
 git clone https://github.com/cppmai1103/nlp_asm2.git
 cd nlp_asm2
-```
-
-### (Optional) Create a virtual environment
-```bash
-python -m venv .venv
-source .venv/bin/activate       # Linux/Mac
-# .venv\Scripts\activate        # Windows
 ```
 
 ### Install dependencies
