@@ -60,6 +60,8 @@ python predict.py \
   --model_path ./result_codebert \
   --parquet_path data/test.parquet \
   --output_path submission.csv
+```
+---
 
 ## 5. Repository Structure
 nlp_asm2/
