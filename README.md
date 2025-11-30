@@ -1,159 +1,75 @@
-# NLP701 – SemEval 2026 Task 13
+# NLP701 – Assignment 2: Detecting AI-Generated Code
 
-This repository contains code for training and evaluating a CodeBERT-based classifier for SemEval 2026 Task 13 (Subtask B).  
-It includes:
+This repository contains code for training and evaluating models for **SemEval 2026 Task 13 (Subtask B)** using CodeBERT and UniXcoder. 
 
-- `train.py` — main training pipeline  
-- `train_weightCE.py` — training with weighted cross-entropy  
-- `predict.py` — inference on `.parquet` files  
-- `huggingface.py` — upload trained model to Hugging Face Hub  
+Learderboard team name: `cppmai`
 
----
-
-## 🔧 1. Installation
-
-### Clone the repository
-```bash
-git clone https://github.com/cppmai1103/nlp_asm2.git
-cd nlp_asm2
-```
-
-### Install dependencies
+## 1. Install dependencies
 ```bash
 pip install -r requirements.txt
 ```
 
 ---
 
-## 📚 2. Dataset Format
-
-Training and inference scripts expect a \`.parquet\` file with at least:
-
-- `code` — source code snippet  
-- `label` — class label (integer)  
-- Optional for inference: `ID`
-
-Example:
-
-| ID  | code                          | label |
-|-----|-------------------------------|-------|
-| 12  | \`def add(a, b): return a+b\` | 0     |
-| 87  | \`public static void main...\`| 1     |
-
-If no parquet is provided, \`train.py\` loads the SemEval dataset automatically.
-
----
-
-## 🏋️‍♀️ 3. Training
-
-### Basic usage
+## 2. Dataset undersampling
+Create an undersampled dataset where the number of Human samples equals the total number of LLM-generated samples.
 ```bash
-python train.py
+python src/data_undersampling.py \
+  --input data/train.parquet \
+  --output data/train_undersampling.parquet
 ```
 
-### Advanced usage
+## 3. Training 
+
+### Original training set 
+Finetune CodeBERT
 ```bash
-python train.py \
-  --task A \
-  --output_dir ./results_undersampling \
-  --epochs 3 \
-  --batch_size 32 \
-  --learning_rate 2e-5 \
-  --max_length 128
+python src/train.py \
+  --output_dir result_codebert \
+  --model_name microsoft/codebert-base
 ```
 
-Arguments:
-
-| Argument | Default | Description |
-|----------|---------|-------------|
-| \`--task\` | A | SemEval subset |
-| \`--output_dir\` | ./results_undersampling | Output folder |
-| \`--epochs\` | 1 | Number of epochs |
-| \`--batch_size\` | 32 | Batch size |
-| \`--learning_rate\` | 2e-5 | Learning rate |
-| \`--max_length\` | 128 | Max token length |
-
----
-
-## ⚖️ 4. Weighted Cross Entropy Training
-
+Finetune UniXcoder
 ```bash
-python train_weightCE.py \
-  --output_dir ./results_weighted \
-  --epochs 3 \
-  --batch_size 32 \
-  --learning_rate 2e-5
+python src/train.py \
+  --output_dir result_unixcoder \
+  --model_name microsoft/unixcoder-base
 ```
 
+### Undersampled training set
+Finetune CodeBERT
+```bash
+python src/train.py \
+  --output_dir result_codebert_undersampling \
+  --model_name microsoft/codebert-base \
+  --parquet_path data/train_undersampling.parquet
+```
+
+Finetune UniXcoder
+```bash
+python src/train.py \
+  --output_dir result_unixcoder_undersampling \
+  --model_name microsoft/unixcoder-base \
+  --parquet_path data/train_undersampling.parquet
+```
 ---
 
-## 🔎 5. Inference
-
+## 4. Predicting on TEST set
 ```bash
 python predict.py \
-  --model_path ./results_undersampling \
-  --parquet_path test.parquet \
-  --output_path predictions.csv
-```
+  --model_path ./result_codebert \
+  --parquet_path data/test.parquet \
+  --output_path submission.csv
 
-Output CSV format:
-
-```
-ID,prediction
-101,0
-102,1
-```
-
----
-
-## ☁️ 6. Upload to Hugging Face
-
-1. Log in:
-```bash
-huggingface-cli login
-```
-
-2. Upload:
-```bash
-python huggingface.py \
-  --model_dir ./results_undersampling \
-  --repo_id your-username/your-model-name
-```
-
----
-
-## 📁 7. Repository Structure
-
-```
+## 5. Repository Structure
 nlp_asm2/
-├── train.py
-├── train_weightCE.py
-├── predict.py
-├── huggingface.py
+├── src/
+│   ├── train.py
+│   ├── data_undersampling.py
+│   ├── predict.py
+├── data/
+│   ├── train.parquet
+│   ├── test.parquet
 ├── requirements.txt
-├── .gitignore
 └── README.md
 ```
-
----
-
-## 📝 Notes
-
-- Large files (.parquet, .bin, .pt) are ignored via .gitignore  
-- Base model: \`microsoft/codebert-base\`  
-
----
-
-## 📄 License
-
-This project is part of NLP701 coursework.  
-Feel free to reuse with attribution.
-EOF
-
-### Clone the repository
-```bash
-git clone https://github.com/cppmai1103/nlp_asm2.git
-cd nlp_asm2
-
-### Install dependencies
-pip install -r requirements.txt
