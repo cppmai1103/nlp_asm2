@@ -64,6 +64,7 @@ python predict.py \
 ---
 
 ## 5. Repository Structure
+```
 nlp_asm2/
 ├── src/
 │   ├── train.py
