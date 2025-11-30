@@ -226,11 +226,13 @@ class CodeBERTTrainer:
 def main():
     parser = argparse.ArgumentParser(description='Train CodeBERT on SemEval-2026-Task13')
     parser.add_argument('--task', choices=['A', 'B', 'C'], default='B', help='Task subset to use')
-    parser.add_argument('--output_dir', default='./result_codebert_256', help='Output directory')
-    parser.add_argument('--epochs', type=int, default=2, help='Number of training epochs')
+    parser.add_argument('--output_dir', default='./result', help='Output directory')
+    parser.add_argument('--epochs', type=int, default=3, help='Number of training epochs')
     parser.add_argument('--batch_size', type=int, default=32, help='Batch size')
     parser.add_argument('--learning_rate', type=float, default=2e-5, help='Learning rate')
     parser.add_argument('--max_length', type=int, default=256, help='Maximum sequence length')
+    parser.add_argument('--parquet_path', type=str, default=None, help='Path to a local parquet file to use as training data') # data/train_undersampling.parquet
+    parser.add_argument('--model_name', choices=['microsoft/codebert-base', 'microsoft/unixcoder-base'], type=str, default='microsoft/codebert-base', help='Hugging Face model name or path')
     
     args = parser.parse_args()
     
@@ -238,7 +240,9 @@ def main():
     
     trainer = CodeBERTTrainer(
         task_subset=args.task,
-        max_length=args.max_length
+        max_length=args.max_length, 
+        model_name=args.model_name,
+        parquet_path = args.parquet_path
     )
     
     trainer.run_full_pipeline(

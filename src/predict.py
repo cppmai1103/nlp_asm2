@@ -79,9 +79,9 @@ def predict(model_path, parquet_path, output_path, max_length=512, batch_size=16
 if __name__ == "__main__":
     #  required=True,
     parser = argparse.ArgumentParser(description="Run inference with trained CodeBERT model (streaming)")
-    parser.add_argument("--model_path", type=str, default='summary_result/result_undersampling_256', help="Path to trained model folder")
-    parser.add_argument("--parquet_path", type=str, default='test.parquet', help="Path to input parquet file with ID and code")
-    parser.add_argument("--output_path", type=str, default='codeBERT_256_undersampling.csv', help="Path to save predictions CSV")
+    parser.add_argument("--model_path", type=str, default='/result', help="Path to trained model folder")
+    parser.add_argument("--parquet_path", type=str, default='data/test.parquet', help="Path to input parquet file with ID and code")
+    parser.add_argument("--output_path", type=str, default='submission.csv', help="Path to save predictions CSV")
     parser.add_argument("--max_length", type=int, default=256, help="Maximum sequence length")
     parser.add_argument("--batch_size", type=int, default=16, help="Batch size for inference")
     parser.add_argument("--device", type=str, default=None, help="Force device: cpu or cuda")
