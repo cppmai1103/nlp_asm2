@@ -3,3 +3,6 @@ result_*
 *.parquet
 *result_summary
 .ipynb_checkpoints/
+data
+summary_results1/
+summary_result1/
